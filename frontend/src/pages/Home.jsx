@@ -32,7 +32,13 @@ export default function Home({ token }) {
 
   return (
     <div className="page">
-      <h1>Products</h1>
+      {/* <h1>Products</h1> */}
+      <div className="hero-dots">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <h1>Everything on the <em>shelf.</em></h1>
+      <p>Browse the catalog, add what you need to your cart, and check out in a few clicks.</p>
       <form onSubmit={handleSearch} className="search-bar">
         <input
           type="text"

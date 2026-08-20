@@ -32,4 +32,7 @@ public class User {
     private Role role = Role.CUSTOMER;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+    private String resetOtp;
+    private LocalDateTime resetOtpExpiry;
+    
 }

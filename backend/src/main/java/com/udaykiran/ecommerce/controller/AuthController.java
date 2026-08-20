@@ -14,6 +14,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import com.udaykiran.ecommerce.dto.ForgotPasswordRequest;
+import com.udaykiran.ecommerce.dto.ResetPasswordRequest;
+import com.udaykiran.ecommerce.service.AuthService;
+
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -23,6 +28,7 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
     private final JwtUtil jwtUtil;
 
     @PostMapping("/register")
@@ -54,4 +60,17 @@ public class AuthController {
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
         return ResponseEntity.ok(new AuthResponse(token, user.getEmail(), user.getRole().name()));
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        authService.requestOtp(request.getEmail());
+        return ResponseEntity.ok("OTP sent to your email.");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request.getEmail(), request.getOtp(), request.getNewPassword());
+        return ResponseEntity.ok("Password reset successfully.");
+    }
+
 }

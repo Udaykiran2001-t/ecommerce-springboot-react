@@ -27,16 +27,19 @@ export default function Cart() {
     fetchCart();
   };
 
-  const placeOrder = async () => {
-    try {
-      await api.post('/orders');
-      setMessage('Order placed successfully.');
-      setItems([]);
-      setTimeout(() => navigate('/orders'), 1000);
-    } catch (err) {
-      setMessage(err.response?.data?.message || 'Could not place order.');
-    }
-  };
+  // const placeOrder = async () => {
+  //   try {
+  //     await api.post('/orders');
+  //     setMessage('Order placed successfully.');
+  //     setItems([]);
+  //     setTimeout(() => navigate('/orders'), 1000);
+  //   } catch (err) {
+  //     setMessage(err.response?.data?.message || 'Could not place order.');
+  //   }
+  // };
+  const goToCheckout = () => {
+    navigate('/Checkout');
+  }
 
   const total = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
 
@@ -62,7 +65,7 @@ export default function Cart() {
             </div>
           ))}
           <h3>Total: Rs. {total}</h3>
-          <button onClick={placeOrder}>Place order</button>
+          <button onClick={goToCheckout}>Proceed to checkout</button>
         </>
       )}
     </div>
